@@ -419,4 +419,16 @@
       </div>
     </div>
     <div class="disclaim">
-      Renderings shown are conceptual and for illustration; final finishes and dimensions may vary. Interior square footage is approximate and subject to confirmation against construction documents. ADU regulations are set by state law (HB 2720 / HB 2928) and individual city ordinances and are subject to change and to parcel-specific review; nothing here is a guarantee that a given lot qualifies. Rent ranges and any figures shown are illustrative ma
+      Renderings shown are conceptual and for illustration; final finishes and dimensions may vary. Interior square footage is approximate and subject to confirmation against construction documents. ADU regulations are set by state law (HB 2720 / HB 2928) and individual city ordinances and are subject to change and to parcel-specific review; nothing here is a guarantee that a given lot qualifies. Rent ranges and any figures shown are illustrative market estimates, not financial advice or a guarantee of investment returns. © SOKO Development.
+    </div>
+  </div>
+</footer>
+
+<script>
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
+  },{threshold:.12});
+  document.querySelectorAll('.reveal').forEach((el,i)=>{ el.style.transitionDelay=(Math.min(i%4,4)*60)+'ms'; io.observe(el); });
+</script>
+</body>
+</html>
