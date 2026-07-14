@@ -1,17 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- Google tag (gtag.js) — GA4 + Google Ads conversion tracking
-     TODO: replace G-XXXXXXX with your real GA4 Measurement ID
-     TODO: replace AW-XXXXXXXXX with your real Google Ads Conversion ID
-     (both come from Section 2/3 of the launch plan — GA4 property + Ads conversion action) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXX"></script>
+<!-- Google tag (gtag.js) — Google Ads conversion tracking
+     AW-18011803346 = Google Ads "ADU Consult Form" conversion (created 2026-07).
+     (Optional later: add a GA4 Measurement ID as a second gtag('config', 'G-...').) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-18011803346"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-  gtag('config', 'G-XXXXXXX');       // GA4
-  gtag('config', 'AW-XXXXXXXXX');    // Google Ads
+  gtag('config', 'AW-18011803346');    // Google Ads
 </script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -553,6 +551,11 @@
           status.textContent = "Thanks — we'll be in touch within one business day.";
           status.className = 'cf-status cf-status-ok';
           Array.prototype.forEach.call(form.querySelectorAll('.cf-row, .cf-submit'), function(el){ el.style.display = 'none'; });
+          // --- Tell Google Ads a lead just converted (ADU Consult Form) ---
+          if (typeof gtag === 'function') {
+            gtag('event', 'conversion', { 'send_to': 'AW-18011803346/n7LnCOfjjNAcENKd2YxD' });
+            gtag('event', 'generate_lead'); // also logs the lead in GA4, if added later
+          }
         } else {
           throw new Error((result.json && result.json.error) || 'Something went wrong');
         }
