@@ -55,7 +55,7 @@ exports.handler = async (event) => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: process.env.MONDAY_API_KEY,
+        Authorization: process.env.MONDAY_API_TOKEN || process.env.MONDAY_API_KEY,
         'API-Version': '2024-10',
       },
       body: JSON.stringify({
