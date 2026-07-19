@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Add a 2nd Check to Your Phoenix Rental | SOKO Development</title>
+<meta name="description" content="How an ADU increases your Phoenix rental income. Turnkey design + permit + build for California owners. ADUs starting at $99,000. Free preliminary site review.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<style>
+  :root{
+    --ink:        #16302c;   /* deep postcard teal */
+    --ink-2:      #1d3b36;   /* slightly lighter panel teal */
+    --ink-3:      #244741;
+    --sage:       #9fbdb5;   /* light sage accent (the "2nd" color) */
+    --sage-soft:  rgba(159,189,181,0.14);
+    --sage-line:  rgba(159,189,181,0.28);
+    --cream:      #f4f1e9;
+    --cream-dim:  rgba(244,241,233,0.72);
+    --cream-faint:rgba(244,241,233,0.45);
+    --gold:       #c9a86a;
+    --serif: 'Playfair Display', Georgia, serif;
+    --sans: 'Inter', -apple-system, sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:var(--sans);background:var(--ink);color:var(--cream);overflow-x:hidden}
+  img{max-width:100%;display:block}
+  a{color:inherit}
+
+  .eyebrow{font-family:var(--sans);font-weight:600;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--sage)}
+  .btn-primary{display:inline-block;background:var(--cream);color:var(--ink);padding:17px 44px;border-radius:6px;font-family:var(--sans);font-weight:700;font-size:17px;border:none;cursor:pointer;text-decoration:none;transition:background .2s ease,transform .15s ease}
+  .btn-primary:hover{background:#fffdf6;transform:translateY(-2px)}
+  .btn-ghost{display:inline-block;background:transparent;color:var(--cream);padding:16px 34px;border-radius:6px;border:1px solid var(--sage-line);font-weight:600;font-size:16px;text-decoration:none;transition:border-color .2s,background .2s}
+  .btn-ghost:hover{border-color:var(--sage);background:var(--sage-soft)}
+
+  /* ---------- HERO ---------- */
+  .hero{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;background:var(--ink);overflow:hidden;padding:90px 24px}
+  .hero-content{position:relative;z-index:2;text-align:center;max-width:840px}
+  .hero-logo{font-family:var(--serif);font-weight:700;font-size:20px;letter-spacing:.28em;text-transform:uppercase;color:var(--cream);margin-bottom:6px}
+  .hero-logo span{color:var(--sage)}
+  .hero-tag{font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--cream-faint);margin-bottom:44px}
+  .hero-title{font-family:var(--serif);font-weight:600;font-size:clamp(42px,6.5vw,76px);line-height:1.08;color:var(--cream);margin:18px 0 22px}
+  .hero-title em{font-style:italic;color:var(--sage)}
+  .hero-subtitle{font-size:18px;line-height:1.65;color:var(--cream-dim);max-width:640px;margin:0 auto 36px}
+  .hero-ctas{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;align-items:center}
+  .hero-phone{font-size:15px;color:var(--cream-dim)}
+  .hero-phone a{color:var(--cream);font-weight:700;text-decoration:none;font-size:18px}
+  .hero-shapes-back,.hero-shapes-mid{position:absolute;inset:0;pointer-events:none}
+  .shape-rect{position:absolute;top:12%;right:7%;width:340px;height:200px;border:2px solid var(--sage-line);border-radius:12px;opacity:.5}
+  .shape-circle{position:absolute;bottom:22%;left:8%;width:70px;height:70px;border-radius:50%;background:var(--sage-soft)}
+  .shape-diamond{position:absolute;top:58%;right:16%;width:55px;height:55px;background:rgba(201,168,106,0.22);transform:rotate(45deg)}
+  .shape-dot{position:absolute;top:28%;left:7%;width:10px;height:10px;border-radius:50%;background:var(--sage)}
+  @keyframes floatA{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-16px) rotate(4deg)}}
+  @keyframes floatB{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-11px) rotate(-3deg)}}
+  @keyframes floatC{0%,100%{transform:translateY(0) rotate(45deg)}50%{transform:translateY(-9px) rotate(50deg)}}
+  .float-a{animation:floatA 7s ease-in-out infinite}
+  .float-b{animation:floatB 9s ease-in-out infinite 1.5s}
+  .float-c{animation:floatC 6s ease-in-out infinite .5s}
+  @keyframes bounce{0%,100%{transform:translate(-50%,0);opacity:.5}50%{transform:translate(-50%,7px);opacity:1}}
+  .scroll-indicator{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);animation:bounce 2s ease-in-out infinite;cursor:pointer;z-index:2}
+
+  /* ---------- SECTION SHELLS ---------- */
+  section{position:relative}
+  .sec-head{text-align:center;max-width:760px;margin:0 auto 56px;padding:0 8px}
+  .sec-title{font-family:var(--serif);font-weight:600;font-size:clamp(32px,4.4vw,50px);line-height:1.15;color:var(--cream);margin:16px 0 14px}
+  .sec-sub{font-size:17px;line-height:1.65;color:var(--cream-dim)}
+  .light .sec-title{color:var(--ink)}
+  .light .sec-sub{color:rgba(22,48,44,0.72)}
+  .light .eyebrow{color:#4d7a70}
+
+  /* ---------- MATH / COMPS ---------- */
+  .math-section{padding:110px 24px;background:var(--ink-2)}
+  .math-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;max-width:1060px;margin:0 auto 20px}
+  .stat-card{background:var(--sage-soft);border:1px solid var(--sage-line);border-radius:12px;padding:34px 28px;text-align:center}
+  .stat-label{font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--sage);font-weight:600;margin-bottom:10px}
+  .stat-value{font-family:var(--serif);font-weight:700;font-size:clamp(30px,3.4vw,42px);color:var(--cream);line-height:1.1}
+  .stat-note{font-size:13.5px;color:var(--cream-faint);margin-top:10px;line-height:1.5}
+  .comps-note{max-width:760px;margin:34px auto 0;text-align:center;font-size:14px;line-height:1.7;color:var(--cream-faint)}
+  .comps-note strong{color:var(--cream-dim)}
+
+  /* ---------- CALCULATOR ---------- */
+  .calc-section{padding:110px 24px;background:var(--cream)}
+  .calc-wrap{max-width:1060px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start}
+  .calc-panel{background:#fff;border:1px solid rgba(22,48,44,0.12);border-radius:14px;padding:36px;box-shadow:0 20px 50px rgba(22,48,44,0.08)}
+  .calc-panel h3{font-family:var(--serif);font-size:24px;color:var(--ink);margin-bottom:22px}
+  .model-picker{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:28px}
+  .model-btn{border:1.5px solid rgba(22,48,44,0.18);background:#fff;border-radius:10px;padding:14px 8px;cursor:pointer;text-align:center;transition:all .18s;font-family:var(--sans)}
+  .model-btn .m-name{font-weight:700;font-size:14px;color:var(--ink)}
+  .model-btn .m-meta{font-size:12px;color:rgba(22,48,44,0.55);margin-top:4px}
+  .model-btn.active{border-color:var(--ink);background:var(--ink);}
+  .model-btn.active .m-name,.model-btn.active .m-meta{color:var(--cream)}
+  .slider-row{margin-bottom:8px}
+  .slider-labels{display:flex;justify-content:space-between;font-size:13px;color:rgba(22,48,44,0.6);margin-bottom:8px}
+  .slider-labels strong{color:var(--ink);font-size:15px}
+  input[type=range]{width:100%;accent-color:#1d3b36;height:32px;cursor:pointer}
+  .slider-hint{font-size:12.5px;color:rgba(22,48,44,0.5);line-height:1.5;margin-top:6px}
+  .calc-results{display:grid;gap:14px}
+  .res-row{display:flex;justify-content:space-between;align-items:baseline;padding:16px 20px;background:rgba(159,189,181,0.16);border-radius:10px}
+  .res-row.hero-row{background:var(--ink)}
+  .res-label{font-size:14px;font-weight:600;color:rgba(22,48,44,0.75)}
+  .hero-row .res-label{color:var(--sage)}
+  .res-value{font-family:var(--serif);font-weight:700;font-size:24px;color:var(--ink)}
+  .hero-row .res-value{color:var(--cream);font-size:32px}
+  .calc-disclaimer{font-size:12px;color:rgba(22,48,44,0.5);line-height:1.6;margin-top:18px}
+  .calc-cta{margin-top:24px;text-align:center}
+  .calc-cta .btn-dark{display:inline-block;background:var(--ink);color:var(--cream);padding:16px 40px;border-radius:6px;font-weight:700;font-size:16px;text-decoration:none;transition:transform .15s,background .2s}
+  .calc-cta .btn-dark:hover{background:var(--ink-3);transform:translateY(-2px)}
+
+  /* ---------- REMOTE / OBJECTIONS ---------- */
+  .remote-section{padding:110px 24px;background:var(--ink)}
+  .features-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;max-width:1160px;margin:0 auto}
+  .feature-card{background:var(--sage-soft);border:1px solid var(--sage-line);border-radius:12px;padding:34px 26px;transition:background .25s,border-color .25s,transform .25s}
+  .feature-card:hover{background:rgba(159,189,181,0.2);border-color:var(--sage);transform:translateY(-5px)}
+  .feature-card svg{margin-bottom:18px}
+  .feature-card h3{font-family:var(--sans);font-weight:600;font-size:19px;color:var(--cream);margin-bottom:10px}
+  .feature-card p{font-size:14.5px;line-height:1.6;color:var(--cream-dim)}
+
+  /* ---------- MODELS ---------- */
+  .models-section{padding:110px 24px;background:var(--ink-2)}
+  .models-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;max-width:1160px;margin:0 auto}
+  .model-card{background:var(--ink);border:1px solid var(--sage-line);border-radius:14px;overflow:hidden;transition:transform .25s,border-color .25s}
+  .model-card:hover{transform:translateY(-6px);border-color:var(--sage)}
+  .model-card img{width:100%;height:230px;object-fit:cover}
+  .model-body{padding:26px}
+  .model-body h3{font-family:var(--serif);font-size:24px;color:var(--cream)}
+  .model-specs{font-size:13.5px;color:var(--cream-faint);margin:6px 0 14px}
+  .model-price{font-size:15px;color:var(--sage);font-weight:700;letter-spacing:.02em}
+  .model-rent{font-size:13.5px;color:var(--cream-dim);margin-top:6px}
+
+  /* ---------- FINANCING ---------- */
+  .fin-section{padding:100px 24px;background:var(--ink)}
+  .fin-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:900px;margin:0 auto}
+  .fin-card{border:1px solid var(--sage-line);border-radius:12px;padding:34px 30px;background:var(--sage-soft)}
+  .fin-card .path{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:12px}
+  .fin-card h3{font-family:var(--serif);font-size:23px;color:var(--cream);margin-bottom:10px}
+  .fin-card p{font-size:14.5px;line-height:1.65;color:var(--cream-dim)}
+
+  /* ---------- FAQ ---------- */
+  .faq-section{padding:110px 24px;background:var(--cream)}
+  .faq-list{max-width:780px;margin:0 auto}
+  .faq-item{border-bottom:1px solid rgba(22,48,44,0.14)}
+  .faq-q{width:100%;background:none;border:none;text-align:left;padding:24px 44px 24px 4px;font-family:var(--sans);font-weight:600;font-size:17px;color:var(--ink);cursor:pointer;position:relative}
+  .faq-q::after{content:'+';position:absolute;right:8px;top:50%;transform:translateY(-50%);font-size:26px;font-weight:400;color:#4d7a70;transition:transform .25s}
+  .faq-item.open .faq-q::after{transform:translateY(-50%) rotate(45deg)}
+  .faq-a{max-height:0;overflow:hidden;transition:max-height .35s ease;font-size:15px;line-height:1.7;color:rgba(22,48,44,0.75)}
+  .faq-a-inner{padding:0 4px 26px}
+
+  /* ---------- FORM ---------- */
+  .form-section{padding:120px 24px;background:var(--ink);overflow:hidden}
+  .form-wrap{max-width:640px;margin:0 auto;position:relative;z-index:2}
+  .lead-form{margin-top:40px;display:grid;gap:16px}
+  .form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .lead-form input,.lead-form select,.lead-form textarea{width:100%;padding:15px 18px;border-radius:8px;border:1px solid var(--sage-line);background:rgba(244,241,233,0.06);color:var(--cream);font-family:var(--sans);font-size:15px;transition:border-color .2s,background .2s}
+  .lead-form input::placeholder,.lead-form textarea::placeholder{color:var(--cream-faint)}
+  .lead-form input:focus,.lead-form select:focus,.lead-form textarea:focus{outline:none;border-color:var(--sage);background:rgba(244,241,233,0.1)}
+  .lead-form select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='9'%3E%3Cpath d='M1 1l6 6 6-6' stroke='%239fbdb5' stroke-width='2' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 18px center}
+  .lead-form select option{color:var(--ink);background:var(--cream)}
+  .lead-form textarea{min-height:100px;resize:vertical}
+  .hp-field{position:absolute;left:-9999px;opacity:0;height:0;overflow:hidden}
+  .form-submit{background:var(--cream);color:var(--ink);padding:18px;border:none;border-radius:8px;font-weight:800;font-size:17px;cursor:pointer;transition:background .2s,transform .15s;font-family:var(--sans)}
+  .form-submit:hover{background:#fffdf6;transform:translateY(-2px)}
+  .form-submit:disabled{opacity:.6;cursor:wait;transform:none}
+  .form-note{font-size:13px;color:var(--cream-faint);text-align:center;line-height:1.6}
+  .form-msg{display:none;text-align:center;padding:18px;border-radius:8px;font-size:15px;line-height:1.6}
+  .form-msg.ok{display:block;background:var(--sage-soft);border:1px solid var(--sage);color:var(--cream)}
+  .form-msg.err{display:block;background:rgba(201,120,106,0.12);border:1px solid rgba(201,120,106,0.5);color:var(--cream)}
+  .form-glow{position:absolute;inset:0;background:radial-gradient(ellipse 480px 260px at 50% 42%,var(--sage-soft),transparent);pointer-events:none}
+
+  /* ---------- FOOTER ---------- */
+  footer{background:#102420;padding:60px 24px 40px;text-align:center}
+  .foot-logo{font-family:var(--serif);font-weight:700;letter-spacing:.28em;text-transform:uppercase;font-size:16px;color:var(--cream);margin-bottom:8px}
+  .foot-tag{font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--cream-faint);margin-bottom:26px}
+  .foot-contact{font-size:14.5px;color:var(--cream-dim);line-height:2}
+  .foot-contact a{color:var(--cream);text-decoration:none;font-weight:600}
+  .foot-legal{max-width:720px;margin:30px auto 0;font-size:11.5px;line-height:1.7;color:rgba(244,241,233,0.35)}
+
+  @media (max-width:1000px){
+    .features-grid{grid-template-columns:repeat(2,1fr)}
+    .models-grid{grid-template-columns:1fr}
+    .model-card img{height:280px}
+  }
+  @media (max-width:860px){
+    .calc-wrap{grid-template-columns:1fr}
+    .math-grid{grid-template-columns:1fr;max-width:440px}
+    .fin-grid{grid-template-columns:1fr}
+  }
+  @media (max-width:580px){
+    .features-grid{grid-template-columns:1fr}
+    .form-row{grid-template-columns:1fr}
+    .shape-rect{width:220px;height:130px}
+  }
+</style>
+</head>
+<body>
+
+<!-- ================= HERO ================= -->
+<section class="hero">
+  <div class="hero-shapes-back">
+    <div class="shape-rect float-a"></div>
+    <div class="shape-circle float-b"></div>
+  </div>
+  <div class="hero-shapes-mid">
+    <div class="shape-diamond float-c"></div>
+    <div class="shape-dot"></div>
+  </div>
+  <div class="hero-content">
+    <div class="hero-logo">Soko <span>Development</span></div>
+    <div class="hero-tag">Design + Permit + Build</div>
+    <div class="eyebrow hero-eyebrow">For California Owners of Phoenix Rentals</div>
+    <h1 class="hero-title">You already own the land.<br>Here&rsquo;s the <em>2nd check</em>.</h1>
+    <p class="hero-subtitle">A turnkey ADU or guest house turns your Phoenix rental into a two-income property &mdash; designed, permitted, and built by one local team while you stay in California.</p>
+    <div class="hero-ctas">
+      <a href="#site-review" class="btn-primary hero-cta">Get My Free Site Review</a>
+      <span class="hero-phone">or call <a href="tel:4806859180">480-685-9180</a></span>
+    </div>
+  </div>
+  <a href="#the-math" class="scroll-indicator" aria-label="Scroll down">
+    <svg width="24" height="14" viewBox="0 0 24 14" fill="none"><path d="M2 2l10 10L22 2" stroke="#9fbdb5" stroke-width="2.5" stroke-linecap="round"/></svg>
+  </a>
+</section>
+
+<!-- ================= THE MATH ================= -->
+<section class="math-section" id="the-math">
+  <div class="sec-head">
+    <div class="eyebrow">The Income Answer You Scanned For</div>
+    <h2 class="sec-title">How an ADU increases your rental income</h2>
+    <p class="sec-sub">Detached casitas and guest houses in Phoenix rent as their own units — a second check from the same lot you already own and manage.</p>
+  </div>
+  <div class="math-grid">
+    <div class="stat-card">
+      <div class="stat-label">Build Investment</div>
+      <div class="stat-value">$99K&ndash;$149K</div>
+      <div class="stat-note">Turnkey, by unit size — design, permits, and construction included.</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Phoenix ADU Rents</div>
+      <div class="stat-value">$1,100&ndash;$2,200<span style="font-size:18px">/mo</span></div>
+      <div class="stat-note">Actual Phoenix-metro casita &amp; guest-house rentals, 400&ndash;900 sq ft.</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Added Annual Income</div>
+      <div class="stat-value">$13K&ndash;$26K<span style="font-size:18px">/yr</span></div>
+      <div class="stat-note">Gross rent on top of what your existing home already produces.</div>
+    </div>
+  </div>
+  <p class="comps-note">Those rent figures aren&rsquo;t projections &mdash; they come from <strong>real listed and leased backyard units across Phoenix</strong>: rear cottages in Coronado, casitas off Camelback, guest houses in the historic districts. Small detached units are scarce, and scarcity holds rents up.</p>
+</section>
+
+<!-- ================= CALCULATOR ================= -->
+<section class="calc-section light" id="calculator">
+  <div class="sec-head">
+    <div class="eyebrow">Run Your Own Numbers</div>
+    <h2 class="sec-title">The 2nd-check calculator</h2>
+    <p class="sec-sub">Pick a unit, set a rent, and see what your lot could produce.</p>
+  </div>
+  <div class="calc-wrap">
+    <div class="calc-panel">
+      <h3>1. Choose your unit</h3>
+      <div class="model-picker" id="modelPicker">
+        <button class="model-btn" data-model="0" type="button">
+          <div class="m-name">Studio</div>
+          <div class="m-meta">~400 sf &middot; $99K</div>
+        </button>
+        <button class="model-btn active" data-model="1" type="button">
+          <div class="m-name">One-Bedroom</div>
+          <div class="m-meta">~600 sf &middot; $119K</div>
+        </button>
+        <button class="model-btn" data-model="2" type="button">
+          <div class="m-name">Two-Level</div>
+          <div class="m-meta">~800 sf &middot; $149K</div>
+        </button>
+      </div>
+      <h3>2. Set the monthly rent</h3>
+      <div class="slider-row">
+        <div class="slider-labels"><span id="rentMin">$1,200</span><strong id="rentVal">$1,200</strong><span id="rentMax">$1,800</span></div>
+        <input type="range" id="rentSlider" min="1200" max="1800" step="25" value="1200" aria-label="Monthly rent">
+        <p class="slider-hint" id="sliderHint">Range reflects actual Phoenix-metro rents for comparable casitas and guest houses.</p>
+      </div>
+    </div>
+    <div class="calc-panel">
+      <h3>What it produces</h3>
+      <div class="calc-results">
+        <div class="res-row hero-row"><span class="res-label">New Monthly Income</span><span class="res-value" id="resMonthly">$1,200</span></div>
+        <div class="res-row"><span class="res-label">Annual Gross Rent</span><span class="res-value" id="resAnnual">$14,400</span></div>
+        <div class="res-row"><span class="res-label">Gross Yield on Build Cost</span><span class="res-value" id="resYield">12.1%</span></div>
+        <div class="res-row"><span class="res-label">Simple Payback</span><span class="res-value" id="resPayback">8.3 yrs</span></div>
+        <div class="res-row"><span class="res-label">10-Year Gross Income</span><span class="res-value" id="resTen">$144,000</span></div>
+      </div>
+      <p class="calc-disclaimer">Illustrative only — not a guarantee of returns or an offer of financial advice. Excludes operating costs, vacancy, taxes, and financing. Rents vary by neighborhood and finish level. Final build cost confirmed after your free site review.</p>
+      <div class="calc-cta">
+        <a class="btn-dark" href="#site-review">Check My Property &rarr;</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= REMOTE OWNER ================= -->
+<section class="remote-section features-section" id="remote">
+  <div class="sec-head features-headline">
+    <div class="eyebrow">Built for Out-of-State Owners</div>
+    <h2 class="sec-title">You never have to fly out</h2>
+    <p class="sec-sub">One team owns the whole process in Phoenix. You watch it happen from California.</p>
+  </div>
+  <div class="features-grid">
+    <div class="feature-card">
+      <svg width="28" height="28" viewBox="0 0 28 28" fill="none" stroke="#9fbdb5" stroke-width="1.8"><rect x="3" y="3" width="22" height="22" rx="3"/><path d="M3 11h22M11 11v14"/></svg>
+      <h3>One team, one contract</h3>
+      <p>Design + permit + build under a single roof. No hunting for an architect, then an engineer, then a GC from 400 miles away.</p>
+    </div>
+    <div class="feature-card">
+      <svg width="28" height="28" viewBox="0 0 28 28" fill="none" stroke="#9fbdb5" stroke-width="1.8"><path d="M4 20V8l8-5 8 5v12"/><path d="M20 10l4 2v8h-8"/><circle cx="12" cy="14" r="2.5"/></svg>
+      <h3>By-right approval</h3>
+      <p>Arizona&rsquo;s statewide ADU law (HB 2720, adopted by Phoenix in 2025) means no hearings and no variances on qualifying lots.</p>
+    </div>
+    <div class="feature-card">
+      <svg width="28" height="28" viewBox="0 0 28 28" fill="none" stroke="#9fbdb5" stroke-width="1.8"><rect x="4" y="5" width="20" height="15" rx="2"/><path d="M9 24h10M14 20v4"/><path d="M8 13l3 3 5-6 4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <h3>Milestone photo updates</h3>
+      <p>Slab, framing, roof, finishes — you get photo and video updates at every stage, plus a direct line to the build team.</p>
+    </div>
+    <div class="feature-card">
+      <svg width="28" height="28" viewBox="0 0 28 28" fill="none" stroke="#9fbdb5" stroke-width="1.8"><circle cx="14" cy="14" r="11"/><path d="M14 8v6l4 3" stroke-linecap="round"/></svg>
+      <h3>5&ndash;7 months, start to rent</h3>
+      <p>From design kickoff to move-in ready. Pre-designed plans keep permitting fast and pricing predictable.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= MODELS ================= -->
+<section class="models-section" id="models">
+  <div class="sec-head">
+    <div class="eyebrow">Three Proven Plans</div>
+    <h2 class="sec-title">Pick a unit, not a project</h2>
+    <p class="sec-sub">Pre-designed, Arizona-code-ready plans adapted to your parcel — the fastest path through permitting.</p>
+  </div>
+  <div class="models-grid">
+    <div class="model-card">
+      <img src="https://arizona-adu.netlify.app/ADU1%20Assets/Studio/Casita%20-%20Front%20View_web.jpg" alt="Studio casita exterior" loading="lazy">
+      <div class="model-body">
+        <h3>Studio</h3>
+        <div class="model-specs">~400 sq ft &middot; studio / 1 bath</div>
+        <div class="model-price">Starting at $99,000</div>
+        <div class="model-rent">Comparable rents: $1,100&ndash;$1,450/mo</div>
+      </div>
+    </div>
+    <div class="model-card">
+      <img src="https://arizona-adu.netlify.app/ADU1%20Assets/1%20Bedroom%20600sf/EXTERIOR%201%20%282%29_web.jpg" alt="One-bedroom ADU exterior" loading="lazy">
+      <div class="model-body">
+        <h3>One-Bedroom</h3>
+        <div class="model-specs">~600 sq ft &middot; 1 bed / 1 bath</div>
+        <div class="model-price">Starting at $119,000</div>
+        <div class="model-rent">Comparable rents: $1,400&ndash;$1,750/mo</div>
+      </div>
+    </div>
+    <div class="model-card">
+      <img src="https://arizona-adu.netlify.app/ADU1%20Assets/1%20Bedroom%20800sf/03%20EXTERIOR%201_web.jpg" alt="Two-level ADU exterior" loading="lazy">
+      <div class="model-body">
+        <h3>Two-Level</h3>
+        <div class="model-specs">~800 sq ft &middot; 1 bed / 1 bath</div>
+        <div class="model-price">Starting at $149,000</div>
+        <div class="model-rent">Comparable rents: $1,700&ndash;$2,200/mo</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FINANCING ================= -->
+<section class="fin-section">
+  <div class="sec-head">
+    <div class="eyebrow">Funding the Build</div>
+    <h2 class="sec-title">Two ways owners pay for it</h2>
+  </div>
+  <div class="fin-grid">
+    <div class="fin-card">
+      <div class="path">Path 01 &middot; Home Equity</div>
+      <h3>Use the equity you already have</h3>
+      <p>A HELOC or cash-out refinance on your California home or your Phoenix rental — often the lowest-cost money for a build in this range.</p>
+    </div>
+    <div class="fin-card">
+      <div class="path">Path 02 &middot; No Equity Needed</div>
+      <h3>Equity-free financing</h3>
+      <p>We have banks and lending partnerships in place for ADU construction financing — no equity required. Ask about current rates and terms on your free site-review call.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FAQ ================= -->
+<section class="faq-section light" id="faq">
+  <div class="sec-head">
+    <div class="eyebrow">Straight Answers</div>
+    <h2 class="sec-title">Questions California owners ask</h2>
+  </div>
+  <div class="faq-list">
+    <div class="faq-item">
+      <button class="faq-q" type="button">Can I really do this from California?</button>
+      <div class="faq-a"><div class="faq-a-inner">Yes — that&rsquo;s the model. SOKO handles design, city permitting, and construction locally in Phoenix. You approve decisions remotely and get milestone photo/video updates through the build. Most out-of-state clients never make a trip.</div></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" type="button">What does it actually cost?</button>
+      <div class="faq-a"><div class="faq-a-inner">Our three pre-designed units run $99,000 (Studio), $119,000 (One-Bedroom), and $149,000 (Two-Level), turnkey. Your free preliminary site review confirms the number for your specific parcel before you commit to anything.</div></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" type="button">Will my Phoenix lot qualify?</button>
+      <div class="faq-a"><div class="faq-a-inner">Most single-family lots in Phoenix qualify under the 2025 statewide ADU law (HB 2720) — by right, with no hearing or variance. Setbacks and utilities still matter, which is exactly what the free site review checks. Local ordinances vary by city.</div></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" type="button">Can I rent it long-term?</button>
+      <div class="faq-a"><div class="faq-a-inner">Yes. State law protects long-term rental of ADUs. Short-term rental rules vary by city — we&rsquo;ll flag anything relevant to your property during the review.</div></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" type="button">How long does it take?</button>
+      <div class="faq-a"><div class="faq-a-inner">Typically 5&ndash;7 months from design kickoff to move-in ready, including city permitting. Pre-designed plans are what keep that timeline short.</div></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" type="button">Does an ADU raise my property value too?</button>
+      <div class="faq-a"><div class="faq-a-inner">Added livable square footage and documented rental income generally support a higher valuation, though appraisal treatment of ADUs varies. The dependable math is the rent — the value bump is upside on top.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FORM ================= -->
+<section class="form-section closing-section" id="site-review">
+  <div class="form-glow"></div>
+  <div class="form-wrap closing-content">
+    <div class="sec-head" style="margin-bottom:0">
+      <div class="eyebrow">Free &middot; No Obligation</div>
+      <h2 class="sec-title">Free preliminary site review<br>&amp; budget estimate</h2>
+      <p class="sec-sub">Tell us where your Phoenix rental is. We&rsquo;ll check what your lot allows and send a parcel-specific layout and budget — within one business day.</p>
+    </div>
+    <form class="lead-form" id="leadForm" novalidate>
+      <div class="form-row">
+        <input type="text" name="name" id="f-name" placeholder="Full name *" required autocomplete="name">
+        <input type="tel" name="phone" id="f-phone" placeholder="Phone *" required autocomplete="tel">
+      </div>
+      <input type="email" name="email" id="f-email" placeholder="Email *" required autocomplete="email">
+      <input type="text" name="address" id="f-address" placeholder="Phoenix property address *" required autocomplete="street-address">
+      <select name="owns" id="f-owns" aria-label="Do you own this property?">
+        <option value="Yes" selected>I own this property</option>
+        <option value="No">I don&rsquo;t own it yet</option>
+        <option value="Unsure">Looking at buying one</option>
+      </select>
+      <textarea name="notes" id="f-notes" placeholder="Anything else we should know? (optional)"></textarea>
+      <div class="hp-field" aria-hidden="true"><input type="text" name="company" id="f-company" tabindex="-1" autocomplete="off"></div>
+      <button type="submit" class="form-submit" id="submitBtn">Check My Property</button>
+      <div class="form-msg" id="formMsg"></div>
+      <p class="form-note">Prefer to talk? Call <a href="tel:4806859180" style="color:var(--cream);font-weight:700">480-685-9180</a>. We respond within one business day.</p>
+    </form>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer>
+  <div class="foot-logo">Soko Development</div>
+  <div class="foot-tag">22 Years in Real Estate &middot; Design + Permit + Build</div>
+  <div class="foot-contact">
+    Phoenix, Arizona<br>
+    <a href="tel:4806859180">480-685-9180</a> &middot; <a href="mailto:kris@sokodesigns.com">kris@sokodesigns.com</a>
+  </div>
+  <p class="foot-legal">Renderings are representative; final designs adapt to your parcel. Square footages are approximate. ADU regulations, setbacks, and utility requirements vary by jurisdiction and lot; eligibility is confirmed during the preliminary site review. Income and return figures are illustrative estimates based on observed Phoenix-metro rental listings, are not guarantees of performance, and do not constitute financial, tax, or investment advice.</p>
+</footer>
+
+<script>
+/* ============ CALCULATOR ============ */
+const RENT_MIN = 1200, RENT_MAX = 1800;
+const MODELS = [
+  { name:'Studio',      cost: 99000,  sf:400 },
+  { name:'One-Bedroom', cost: 119000, sf:600 },
+  { name:'Two-Level',   cost: 149000, sf:800 }
+];
+let activeModel = 1;
+const $ = id => document.getElementById(id);
+const fmt = n => '$' + Math.round(n).toLocaleString('en-US');
+
+function renderCalc(){
+  const m = MODELS[activeModel];
+  const rent = parseInt($('rentSlider').value, 10);
+  $('rentVal').textContent  = fmt(rent);
+  const annual = rent * 12;
+  $('resMonthly').textContent = fmt(rent);
+  $('resAnnual').textContent  = fmt(annual);
+  $('resYield').textContent   = (annual / m.cost * 100).toFixed(1) + '%';
+  $('resPayback').textContent = (m.cost / annual).toFixed(1) + ' yrs';
+  $('resTen').textContent     = fmt(annual * 10);
+}
+function setModel(i){
+  activeModel = i;
+  document.querySelectorAll('.model-btn').forEach((b,bi)=>b.classList.toggle('active', bi===i));
+  renderCalc();
+}
+document.querySelectorAll('.model-btn').forEach(b=>{
+  b.addEventListener('click', ()=> setModel(parseInt(b.dataset.model,10)));
+});
+$('rentSlider').addEventListener('input', renderCalc);
+renderCalc();
+
+/* ============ FAQ ============ */
+document.querySelectorAll('.faq-item').forEach(item=>{
+  const q = item.querySelector('.faq-q');
+  const a = item.querySelector('.faq-a');
+  q.addEventListener('click', ()=>{
+    const open = item.classList.toggle('open');
+    a.style.maxHeight = open ? a.scrollHeight + 'px' : '0';
+  });
+});
+
+/* ============ FORM ============ */
+const form = $('leadForm');
+form.addEventListener('submit', async (e)=>{
+  e.preventDefault();
+  const msg = $('formMsg');
+  msg.className = 'form-msg';
+  // Honeypot: silently pretend success for bots
+  if ($('f-company').value) { msg.className='form-msg ok'; msg.textContent='Thanks — we’ll be in touch shortly.'; return; }
+  const required = ['f-name','f-phone','f-email','f-address'];
+  for (const id of required) {
+    if (!$(id).value.trim()) {
+      msg.className = 'form-msg err';
+      msg.textContent = 'Please fill in your name, phone, email, and the Phoenix property address.';
+      $(id).focus();
+      return;
+    }
+  }
+  const btn = $('submitBtn');
+  btn.disabled = true; btn.textContent = 'Sending…';
+  try {
+    const res = await fetch('/.netlify/functions/lead', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({
+        name:    $('f-name').value.trim(),
+        phone:   $('f-phone').value.trim(),
+        email:   $('f-email').value.trim(),
+        address: $('f-address').value.trim(),
+        owns:    $('f-owns').value,
+        notes:   $('f-notes').value.trim()
+      })
+    });
+    if (!res.ok) throw new Error('bad status ' + res.status);
+    form.reset();
+    msg.className = 'form-msg ok';
+    msg.textContent = 'Got it — your free site review is in the queue. We’ll reach out within one business day.';
+    btn.textContent = 'Submitted ✓';
+  } catch (err) {
+    msg.className = 'form-msg err';
+    msg.innerHTML = 'Something went wrong sending the form. Please call <a href="tel:4806859180" style="color:inherit;font-weight:700">480-685-9180</a> or email <a href="mailto:kris@sokodesigns.com" style="color:inherit;font-weight:700">kris@sokodesigns.com</a>.';
+    btn.disabled = false; btn.textContent = 'Check My Property';
+  }
+});
+
+/* ============ ANIMATIONS (graceful if CDN blocked) ============ */
+if (window.gsap && window.ScrollTrigger) {
+gsap.registerPlugin(ScrollTrigger);
+
+gsap.set(['.hero-logo','.hero-tag','.hero-eyebrow','.hero-title','.hero-subtitle','.hero-ctas','.scroll-indicator'], {opacity:0, y:30});
+const heroTl = gsap.timeline({delay:.2});
+heroTl
+  .to('.hero-logo',      {opacity:1,y:0,duration:.6,ease:'power3.out'})
+  .to('.hero-tag',       {opacity:1,y:0,duration:.5,ease:'power3.out'},'-=0.35')
+  .to('.hero-eyebrow',   {opacity:1,y:0,duration:.6,ease:'power3.out'},'-=0.25')
+  .to('.hero-title',     {opacity:1,y:0,duration:1,ease:'power3.out'},'-=0.3')
+  .to('.hero-subtitle',  {opacity:1,y:0,duration:.8,ease:'power2.out'},'-=0.5')
+  .to('.hero-ctas',      {opacity:1,y:0,duration:.7,ease:'power2.out'},'-=0.4')
+  .to('.scroll-indicator',{opacity:1,y:0,duration:.5,ease:'power2.out'},'-=0.2');
+
+const hero = document.querySelector('.hero');
+hero.addEventListener('mousemove', (e)=>{
+  const r = hero.getBoundingClientRect();
+  const xPct = (e.clientX - r.left)/r.width - .5;
+  const yPct = (e.clientY - r.top)/r.height - .5;
+  gsap.to('.hero-shapes-back',{duration:2,x:xPct*-45,y:yPct*-22,ease:'power1.out'});
+  gsap.to('.hero-shapes-mid', {duration:1.5,x:xPct*-22,y:yPct*-11,ease:'power1.out'});
+  gsap.to('.hero-content',    {duration:1.2,x:xPct*8,y:yPct*5,ease:'power1.out'});
+});
+
+gsap.set('.stat-card',{opacity:0,y:50,rotateX:16,transformPerspective:900,transformOrigin:'top center'});
+gsap.to('.stat-card',{scrollTrigger:{trigger:'.math-section',start:'top 68%',toggleActions:'play none none reverse'},opacity:1,y:0,rotateX:0,duration:.75,stagger:.12,ease:'power2.out'});
+
+gsap.set('.feature-card',{opacity:0,y:55,rotateX:18,transformPerspective:900,transformOrigin:'top center'});
+gsap.to('.feature-card',{scrollTrigger:{trigger:'.remote-section',start:'top 68%',toggleActions:'play none none reverse'},opacity:1,y:0,rotateX:0,duration:.75,stagger:.11,ease:'power2.out'});
+
+gsap.from('.calc-wrap',{scrollTrigger:{trigger:'.calc-section',start:'top 70%'},opacity:0,y:45,duration:.9,ease:'power3.out'});
+
+gsap.set('.model-card',{opacity:0,y:50});
+gsap.to('.model-card',{scrollTrigger:{trigger:'.models-section',start:'top 68%'},opacity:1,y:0,duration:.8,stagger:.13,ease:'power2.out'});
+
+gsap.from('.fin-card',{scrollTrigger:{trigger:'.fin-section',start:'top 72%'},opacity:0,y:40,duration:.8,stagger:.15,ease:'power2.out'});
+
+gsap.from('.form-wrap',{scrollTrigger:{trigger:'.form-section',start:'top 72%'},opacity:0,y:45,duration:1,ease:'power3.out'});
+
+document.querySelectorAll('.sec-head').forEach(h=>{
+  gsap.from(h,{scrollTrigger:{trigger:h,start:'top 78%'},opacity:0,y:35,duration:.8,ease:'power3.out'});
+});
+}
+</script>
+</body>
+</html>
