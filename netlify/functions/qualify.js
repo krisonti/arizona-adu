@@ -36,6 +36,8 @@ exports.handler = async function (event) {
   const phone = (data.phone || "").trim();
   const address = (data.address || "").trim();
   const city = (data.city || "").trim();
+  const variant = (data.variant || "").trim().toUpperCase();      // "A" | "B" (A/B test page)
+  const leadSource = (data.leadSource || "").trim();              // e.g. "Paid Ad - Google" (from gclid/utm)
 
   if (!name || !email || !phone || !address) {
     return json(400, { error: "Name, email, phone, and address are required." });
@@ -44,7 +46,7 @@ exports.handler = async function (event) {
   // ---- 1. Capture the lead in Monday (highest priority) ----
   let mondayOk = false;
   try {
-    mondayOk = await createMondayLead({ name, email, phone, address, city });
+    mondayOk = await createMondayLead({ name, email, phone, address, city, variant, leadSource });
   } catch (err) {
     console.error("Monday capture failed:", err);
   }
@@ -65,45 +67,53 @@ exports.handler = async function (event) {
 };
 
 /* ---------------- Monday ---------------- */
-async function createMondayLead({ name, email, phone, address, city }) {
+// Board 18416938131 column IDs (from board schema):
+//   text_mm2h8zc7 = Phone, email_mm2hny1k = Email, date4 = Date,
+//   dropdown_mm2hbadt = Project Type, text_mm45qcc4 = Property City/ZIP,
+//   dropdown_mm45aggs = Lead Source, color_mm63h9am = Lead Page (status: "A Page"/"B Page"/"None"),
+//   text_mm2hg88v = Notes/Comments
+const VALID_LEAD_SOURCES = ["CA Investor","Mesa Parent","Direct Mail","Paid Ad - Meta","Paid Ad - Google","Referral","Other"];
+
+async function createMondayLead({ name, email, phone, address, city, variant, leadSource }) {
   const token = process.env.MONDAY_API_TOKEN;
   const boardId = process.env.MONDAY_BOARD_ID || DEFAULT_BOARD_ID;
   if (!token) { console.error("Missing MONDAY_API_TOKEN"); return false; }
+
+  const today = new Date().toISOString().slice(0, 10);
+  const leadPage = variant === "A" ? "A Page" : variant === "B" ? "B Page" : "None";
+
+  const columnValues = {
+    text_mm2h8zc7: String(phone).slice(0, 120),
+    email_mm2hny1k: { email: String(email).slice(0, 200), text: String(email).slice(0, 200) },
+    date4: { date: today },
+    dropdown_mm2hbadt: { labels: ["ADU"] },
+    text_mm45qcc4: String(city || address).slice(0, 250),
+    color_mm63h9am: { label: leadPage },
+    text_mm2hg88v: [
+      `Address: ${address}`,
+      city ? `Detected city: ${city}` : null,
+      `Lead page: ${leadPage}`,
+      `Submitted: ${new Date().toISOString()}`,
+    ].filter(Boolean).join(" | ").slice(0, 2000),
+  };
+  if (leadSource && VALID_LEAD_SOURCES.includes(leadSource)) {
+    columnValues.dropdown_mm45aggs = { labels: [leadSource] };
+  }
 
   const itemName = `${name} — ${phone}`;
   const createRes = await fetch(MONDAY_API_URL, {
     method: "POST",
     headers: { "Content-Type": "application/json", Authorization: token, "API-Version": "2024-01" },
     body: JSON.stringify({
-      query: `mutation ($boardId: ID!, $itemName: String!) {
-        create_item (board_id: $boardId, item_name: $itemName) { id }
+      query: `mutation ($boardId: ID!, $group: String!, $itemName: String!, $cols: JSON!) {
+        create_item (board_id: $boardId, group_id: $group, item_name: $itemName, column_values: $cols) { id }
       }`,
-      variables: { boardId: String(boardId), itemName },
+      variables: { boardId: String(boardId), group: "topics", itemName, cols: JSON.stringify(columnValues) },
     }),
   });
   const createJson = await createRes.json();
   const itemId = createJson?.data?.create_item?.id;
   if (!itemId) { console.error("Monday create_item error:", JSON.stringify(createJson.errors || createJson)); return false; }
-
-  const body = [
-    `Email: ${email}`,
-    `Phone: ${phone}`,
-    `Property address: ${address}`,
-    city ? `Detected city: ${city}` : null,
-    `Lead source: ADU page — property qualifier`,
-    `Submitted: ${new Date().toISOString()}`,
-  ].filter(Boolean).join("\n");
-
-  await fetch(MONDAY_API_URL, {
-    method: "POST",
-    headers: { "Content-Type": "application/json", Authorization: token, "API-Version": "2024-01" },
-    body: JSON.stringify({
-      query: `mutation ($itemId: ID!, $body: String!) {
-        create_update (item_id: $itemId, body: $body) { id }
-      }`,
-      variables: { itemId: String(itemId), body },
-    }),
-  }).catch(e => console.error("Monday update note failed:", e));
 
   return true;
 }

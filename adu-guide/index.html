@@ -4,6 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The Arizona Homeowner's Guide to Building a Casita | SOKO Designs</title>
+<!-- Google tag (gtag.js) — Google Ads conversion tracking (A/B test: B page) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-18011803346"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'AW-18011803346');
+</script>
 <meta name="description" content="The complete guide to building an ADU, casita, or guest house in Arizona. HB 2720 rules, real costs starting at $99K, permits, timelines, and mistakes to avoid — from Phoenix design-build firm SOKO Designs.">
 <link rel="canonical" href="https://arizona-adu.netlify.app/adu-guide/">
 <meta property="og:type" content="article">
@@ -386,11 +394,70 @@ footer a:hover{color:#fff;text-decoration:underline}
       <div class="sec-eyebrow">10 / NEXT STEP</div>
       <h2>Find out what your lot allows — free</h2>
       <p>Tell us where the property is and what you're hoping to build. We'll come back with your lot's zoning status, which state law applies, what size unit fits, and a realistic budget range. No cost, no obligation, no pressure — if a casita doesn't make sense on your lot, we'll tell you that too.</p>
-      <!-- MONDAY WORKFORM EMBED — replace src with the homeowner WorkForm embed URL -->
-      <div style="border:1.5px dashed var(--copper);border-radius:8px;padding:40px 28px;text-align:center;background:#fff;margin-top:28px">
-        <p style="margin:0 0 16px;font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--ink-soft)">[ MONDAY.COM WORKFORM EMBEDS HERE ]<br>https://forms.monday.com/forms/embed/<b>[HOMEOWNER-FORM-HASH]</b>?r=use1</p>
-        <a class="btn" href="#" onclick="return false;">Request My Free Lot Analysis</a>
-      </div>
+      <!-- SOKO qualifier form (A/B test variant B) — posts to /.netlify/functions/qualify, stamps "B Page" in Monday -->
+      <form id="bqf" novalidate style="position:relative;border:1px solid #e2dcce;border-radius:10px;padding:28px;background:#fff;margin-top:28px;box-shadow:0 12px 30px rgba(34,39,31,.06)">
+        <div id="bqf-fields">
+          <div style="display:grid;gap:14px">
+            <label style="font-size:13px;font-weight:600;color:var(--ink-soft)">Property address
+              <input name="address" type="text" required placeholder="123 E Palm Ln, Phoenix, AZ 85004" style="display:block;width:100%;margin-top:6px;padding:13px 14px;border:1px solid #d9d3c4;border-radius:6px;font:inherit;font-size:16px;background:#fff">
+            </label>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+              <label style="font-size:13px;font-weight:600;color:var(--ink-soft)">Your name
+                <input name="name" type="text" required placeholder="Jordan Smith" style="display:block;width:100%;margin-top:6px;padding:13px 14px;border:1px solid #d9d3c4;border-radius:6px;font:inherit;font-size:16px;background:#fff">
+              </label>
+              <label style="font-size:13px;font-weight:600;color:var(--ink-soft)">Phone
+                <input name="phone" type="tel" required placeholder="(480) 555-0123" style="display:block;width:100%;margin-top:6px;padding:13px 14px;border:1px solid #d9d3c4;border-radius:6px;font:inherit;font-size:16px;background:#fff">
+              </label>
+            </div>
+            <label style="font-size:13px;font-weight:600;color:var(--ink-soft)">Email (where we send your report)
+              <input name="email" type="email" required placeholder="you@email.com" style="display:block;width:100%;margin-top:6px;padding:13px 14px;border:1px solid #d9d3c4;border-radius:6px;font:inherit;font-size:16px;background:#fff">
+            </label>
+          </div>
+          <input type="text" name="company" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden">
+          <button type="submit" class="btn bqf-submit" style="margin-top:18px;width:100%">Check my property &amp; email my report</button>
+          <p class="bqf-status" style="text-align:center;font-size:13px;margin-top:10px;color:var(--ink-soft)"></p>
+        </div>
+        <div class="bqf-result" style="display:none;text-align:center;padding:10px 4px">
+          <div style="display:inline-block;background:#eef3ef;color:#2f5d3a;font-weight:700;font-size:12px;letter-spacing:.05em;text-transform:uppercase;padding:8px 15px;border-radius:100px;margin-bottom:14px">✓ Report on its way</div>
+          <h3 class="bqf-r-title" style="font-size:26px;margin-bottom:8px">Checking…</h3>
+          <p class="bqf-r-body" style="color:var(--ink-soft);max-width:42ch;margin:0 auto"></p>
+          <p style="font-size:13px;color:var(--ink-soft);margin-top:14px">Preliminary guidance — final eligibility confirmed during design. Or call <a href="tel:+14806603133" style="color:var(--copper);font-weight:600">480-660-3133</a>.</p>
+        </div>
+      </form>
+      <script>
+      (function(){
+        var GA_CONV="AW-18011803346/n7LnCOfjjNAcENKd2YxD";
+        var CITIES=["phoenix","mesa","chandler","gilbert","glendale","scottsdale","tempe","peoria","surprise","goodyear","buckeye","avondale","queen creek","maricopa"];
+        var form=document.getElementById('bqf'); if(!form) return;
+        var fields=document.getElementById('bqf-fields');
+        var result=form.querySelector('.bqf-result');
+        var status=form.querySelector('.bqf-status');
+        form.addEventListener('submit',function(e){
+          e.preventDefault();
+          var data=Object.fromEntries(new FormData(form).entries());
+          if(data.company) return; // honeypot
+          if(!data.address||!data.name||!data.phone||!data.email){ status.textContent='Please fill in your address, name, phone, and email.'; status.style.color='#b5560f'; return; }
+          var btn=form.querySelector('.bqf-submit'); btn.disabled=true; status.textContent='Checking your property…';
+          var a=(data.address||'').toLowerCase();
+          data.city=CITIES.find(function(c){return a.indexOf(c)>-1;})||'';
+          data.variant='B';
+          data.source='ADU homeowner guide — qualifier (B)';
+          var p=new URLSearchParams(location.search);
+          if(p.get('gclid')||(p.get('utm_source')||'').toLowerCase()==='google'){ data.leadSource='Paid Ad - Google'; }
+          fetch('/.netlify/functions/qualify',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)})
+            .then(function(r){return r.json().then(function(j){return{ok:r.ok,j:j};});}).catch(function(){return{ok:false,j:{}};})
+            .then(function(){
+              if(typeof gtag==='function'){ gtag('event','conversion',{'send_to':GA_CONV}); gtag('event','generate_lead'); }
+              fields.style.display='none'; result.style.display='block';
+              var known=!!data.city;
+              var cityName=data.city?data.city.replace(/\b\w/g,function(m){return m.toUpperCase();}):'Your area';
+              result.querySelector('.bqf-r-title').textContent = known ? 'Good news — your lot likely qualifies.' : "Promising — let's confirm the details.";
+              result.querySelector('.bqf-r-body').textContent = known ? (cityName+' permits ADUs on most single-family lots. Your feasibility report is on its way to your inbox.') : "We're checking the specifics for your parcel now. Your feasibility report is on its way to your inbox.";
+              result.scrollIntoView({behavior:'smooth',block:'center'});
+            });
+        });
+      })();
+      </script>
       <p class="footnote" style="margin-top:20px">Prefer to talk it through? Call or text us at <strong>480-660-3133</strong> — you'll reach a builder, not a call center.</p>
     </section>
   </main>
