@@ -546,15 +546,12 @@
         return res.json().then(function(json){ return {ok: res.ok, json: json}; });
       }).then(function(result){
         if(result.ok && result.json && result.json.ok){
-          status.textContent = "Thanks — we'll be in touch within one business day.";
+          // Lead saved to Monday. Send the visitor to the thank-you page —
+          // that page load is what Google Ads counts as the lead-form conversion.
+          status.textContent = "Thanks — one moment…";
           status.className = 'cf-status cf-status-ok';
-          Array.prototype.forEach.call(form.querySelectorAll('.cf-row, .cf-submit'), function(el){ el.style.display = 'none'; });
-          // --- Google Ads: log the addition lead ---
-          // TODO: once you create an "Addition Estimate Form" conversion action in Google Ads,
-          // paste its label below, e.g. gtag('event','conversion',{'send_to':'AW-18011803346/XXXXXXXX'});
-          if (typeof gtag === 'function') {
-            gtag('event', 'generate_lead');
-          }
+          window.location.href = '/additions/thank-you/';
+          return;
         } else {
           throw new Error((result.json && result.json.error) || 'Something went wrong');
         }
