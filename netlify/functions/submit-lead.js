@@ -28,6 +28,9 @@ exports.handler = async function (event) {
   const phone = (data.phone || "").trim();
   const address = (data.address || "").trim();
   const message = (data.message || "").trim();
+  // Optional service tag so leads from different landing pages (ADU vs. Addition)
+  // land on the same Monday board but stay distinguishable. ADU form omits this.
+  const service = (data.service || "").trim();
 
   if (!name || !email || !phone) {
     return { statusCode: 400, body: JSON.stringify({ error: "Name, email, and phone are required." }) };
@@ -41,7 +44,7 @@ exports.handler = async function (event) {
     return { statusCode: 500, body: JSON.stringify({ error: "Server not configured." }) };
   }
 
-  const itemName = `${name} — ${phone}`;
+  const itemName = service ? `[${service}] ${name} — ${phone}` : `${name} — ${phone}`;
 
   const createItemQuery = `
     mutation ($boardId: ID!, $itemName: String!) {
@@ -75,6 +78,7 @@ exports.handler = async function (event) {
     const itemId = createJson.data.create_item.id;
 
     const bodyLines = [
+      service ? `Service: ${service}` : null,
       `Email: ${email}`,
       `Phone: ${phone}`,
       address ? `Property address: ${address}` : null,
