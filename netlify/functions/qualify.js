@@ -142,7 +142,7 @@ STRICT RULES:
 - Do NOT give a hard "your property does not qualify" verdict. The most cautious framing is "this needs a closer look."
 - Keep it encouraging, concrete, and ~350–500 words.
 
-Return ONLY clean HTML for the body of an email (no <html>, <head>, or <body> tags, no markdown fences). Use simple tags: <h2>, <h3>, <p>, <ul>, <li>, <strong>. Structure it as: a short intro, "What Arizona law means for you", "Your likely options" (mention the three models with sizes), "Rough numbers" (cost + rent), and "Your next step" (invite them to book a consult or call 480-660-3133).`;
+Return ONLY clean HTML for the body of an email (no <html>, <head>, or <body> tags, no markdown fences). Use simple tags: <h2>, <h3>, <p>, <ul>, <li>, <strong>. Structure it as: a short intro, "What Arizona law means for you", "Your likely options" (mention the three models with sizes), "Rough numbers" (cost + rent), and "Your next step" (invite them to book a consult or call 602-878-8087).`;
 
   const res = await fetch("https://api.anthropic.com/v1/messages", {
     method: "POST",
@@ -199,7 +199,7 @@ function emailShell(name, inner) {
       <p>Hi ${escapeHtml(name.split(" ")[0] || name)},</p>
       ${inner}
       <div style="margin:26px 0 6px;text-align:center">
-        <a href="tel:4806603133" style="background:#4A7C7E;color:#fff;text-decoration:none;padding:13px 24px;border-radius:4px;font-family:Arial,sans-serif;font-weight:bold;display:inline-block">Call us: 480-660-3133</a>
+        <a href="tel:6028788087" style="background:#4A7C7E;color:#fff;text-decoration:none;padding:13px 24px;border-radius:4px;font-family:Arial,sans-serif;font-weight:bold;display:inline-block">Call us: 602-878-8087</a>
       </div>
     </div>
     <div style="font-family:Arial,sans-serif;font-size:11px;color:#8A877F;padding:16px 26px;line-height:1.5">
